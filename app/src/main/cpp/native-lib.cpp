@@ -23,6 +23,8 @@ Java_com_example_opencv_12_MainActivity_makecircle(JNIEnv *env, jobject thiz, jl
                                                    jlong mat_addr_result) {
     Mat &matInput = *(Mat *)mat_addr_input;
     Mat &matResult = *(Mat *)mat_addr_result;
+
+
     matResult = matInput;
     int row, col;
     row = matInput.rows;
@@ -30,8 +32,8 @@ Java_com_example_opencv_12_MainActivity_makecircle(JNIEnv *env, jobject thiz, jl
     Mat img_gray;
 
     cvtColor(matInput, img_gray, COLOR_RGBA2GRAY);
-    resize(img_gray, img_gray, Size(112,112), 0, 0, INTER_LINEAR_EXACT);
-    resize(matResult, matResult, Size(112,112), 0, 0, INTER_LINEAR_EXACT);
+    resize(img_gray, img_gray, Size(240,135), 0, 0, INTER_LINEAR_EXACT);
+//    resize(matResult, matResult, Size(240,135), 0, 0, INTER_LINEAR_EXACT);
     medianBlur(img_gray, img_gray, 5);
 
 
@@ -51,7 +53,7 @@ Java_com_example_opencv_12_MainActivity_makecircle(JNIEnv *env, jobject thiz, jl
            }
         }
     if(radius>-1)
-       circle(matResult, center, radius, Scalar(0, 0, 255), 3);
-    resize(matResult, matResult, Size(col,row), 0, 0, INTER_LINEAR_EXACT);
+       circle(matResult, center*8, radius*8, Scalar(0, 0, 255), 3);
+//    resize(matResult, matResult, Size(col,row), 0, 0, INTER_LINEAR_EXACT);
 
 }

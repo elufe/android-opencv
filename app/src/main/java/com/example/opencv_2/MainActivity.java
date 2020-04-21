@@ -28,7 +28,10 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "opencv";
     private Mat matInput;
     private Mat matResult;
+    private Mat matcheck;
 
+
+    //    setPreviewFpsRange(15000,15000)
     private CameraBridgeViewBase mOpenCvCameraView;
 
     public native void ConvertRGBtoGray(long matAddrInput, long matAddrResult);
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.setCameraIndex(0); // front-camera(1),  back-camera(0)
+
     }
 
     @Override
@@ -120,14 +124,26 @@ public class MainActivity extends AppCompatActivity
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
 
         matInput = inputFrame.rgba();
+//        Mat temp;
 
-        if ( matResult == null )
+//        int row=0, col=0;
+//        row = matInput.rows();    1080
+//        col = matInput.cols();    1920
+//        Log.e("내화면", String.valueOf(col));
+
+        if ( matResult == null ) {
             matResult = new Mat(matInput.rows(), matInput.cols(), matInput.type());
+        }
+//        else{
+//            temp = matResult;
+//        }
 
 //        //ConvertRGBtoGray(matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
 
 
-        makecircle(matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
+
+            makecircle(matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
+
 
         return matResult;
         //return matInput;
