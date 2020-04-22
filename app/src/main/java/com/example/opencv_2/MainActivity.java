@@ -28,14 +28,16 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "opencv";
     private Mat matInput;
     private Mat matResult;
-    private Mat matcheck;
+    private Mat matcheck = new Mat(3,3,21);
+    private int cnt=0;
 
 
     //    setPreviewFpsRange(15000,15000)
     private CameraBridgeViewBase mOpenCvCameraView;
 
     public native void ConvertRGBtoGray(long matAddrInput, long matAddrResult);
-    public native void makecircle(long matAddrInput, long matAddrResult);
+    public native void makecircle(long matAddrInput, long matAddrResult, int cnt);
+    public native void findtext(long matAddrInput, long matAddrResult, int cnt);
 
 
     static {
@@ -124,12 +126,16 @@ public class MainActivity extends AppCompatActivity
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
 
         matInput = inputFrame.rgba();
-//        Mat temp;
+        cnt++;
+        cnt = cnt % 10 ;
 
-//        int row=0, col=0;
-//        row = matInput.rows();    1080
-//        col = matInput.cols();    1920
-//        Log.e("내화면", String.valueOf(col));
+//        double[] temp = matcheck.get(1,1);
+//        temp[0] = 0;
+//        temp[1] = 0;
+//        temp[2] = 0;
+
+//        matcheck.put(1,1, new double[]{0,0,0});
+//        Log.e("내화면", String.valueOf(matcheck.get(1,1)));
 
         if ( matResult == null ) {
             matResult = new Mat(matInput.rows(), matInput.cols(), matInput.type());
@@ -142,8 +148,9 @@ public class MainActivity extends AppCompatActivity
 
 
 
-            makecircle(matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
+//            makecircle(matInput.getNativeObjAddr(), matResult.getNativeObjAddr(), cnt);
 
+        findtext(matInput.getNativeObjAddr(), matResult.getNativeObjAddr(), cnt);
 
         return matResult;
         //return matInput;
