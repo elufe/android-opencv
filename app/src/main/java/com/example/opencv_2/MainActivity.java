@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     public native void ConvertRGBtoGray(long matAddrInput, long matAddrResult);
     public native void makecircle(long matAddrInput, long matAddrResult, int cnt);
-    public native void findtext(long matAddrInput, long matAddrResult, int cnt);
+    public native int findtext(long matAddrInput, long matAddrResult, int cnt);
 
 
     static {
@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity
 
         matInput = inputFrame.rgba();
         cnt++;
-        cnt = cnt % 10 ;
-
+        cnt = cnt % 2 ;
+//        cnt = 1;
 //        double[] temp = matcheck.get(1,1);
 //        temp[0] = 0;
 //        temp[1] = 0;
@@ -150,7 +150,9 @@ public class MainActivity extends AppCompatActivity
 
 //            makecircle(matInput.getNativeObjAddr(), matResult.getNativeObjAddr(), cnt);
 
-        findtext(matInput.getNativeObjAddr(), matResult.getNativeObjAddr(), cnt);
+        int num;
+        num = findtext(matInput.getNativeObjAddr(), matResult.getNativeObjAddr(), cnt);
+        Log.e("내화면", String.valueOf(num));
 
         return matResult;
         //return matInput;
